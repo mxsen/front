@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <title>
+                Document
+            </title>
+            <script src="./static/js/jquery.js">
+            </script>
+            <script src="./static/js/bootstrap.js">
+            </script>
+            <script src="./static/js/vue.js">
+            </script>
+            <link href="./static/css/bootstrap.css" rel="stylesheet">
+        </meta>
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>
+                    Vue demo
+                </h1>
+                <div id="app">
+                    <p>
+                        {{ message }}
+                    </p>
+                    <input name="t1" type="text" v-model="message">
+                    </input>
+                    <p v-if="seen">
+                        Now you see me
+                    </p>
+                    <p v-else="">
+                        Now you can't see me.
+                    </p>
+                    <ol>
+                        <li v-for="todo in todos">
+                            {{ todo.text }}
+                        </li>
+                    </ol>
+                    <div v-bind:style="styles">
+                        style
+                    </div>
+                    <button v-on:click="onclick">
+                        点击
+                    </button>
+                    <div v-on:click="show($event)">
+                        点我
+                    </div>
+                    <!-- <div @click.stop="show()">阻止事件冒泡</div> -->
+                    <div @keydown="get()">
+                        啦啦啦~
+                    </div>
+                    <div @keyup.enter="get()">
+                        啦啦啦~
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var app = new Vue({
+      el: '#app',
+      data: {
+          message: 'hello vuejs',
+          seen: true,
+          todos: [
+            { text: 'Learn JavaScript' },
+            { text: 'Learn Vue' },
+            { text: 'Build something awesome' }
+          ],
+          styles: {color:'blue', fontSize:'30px'}
+      },
+      methods:{
+        onclick:function(){
+            alert(1);
+        },
+        show:function(event){
+            alert(event.clientX)
+        }
+      }
+    })
+    </script>
+</html>

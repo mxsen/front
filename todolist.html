@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+        <title>
+            Examples-todolist
+        </title>
+        <link href="./static/css/bootstrap.css" rel="stylesheet"/>
+        <script src="./static/js/jquery.js">
+        </script>
+        <script src="./static/js/bootstrap.js">
+        </script>
+        <script src="./static/js/vue.js">
+        </script>
+    </head>
+    <body>
+        <div class="container" id="todu">
+            <h1 class="text-center">
+                TODOLIST
+            </h1>
+            <form role="form">
+                <label for="name">
+                    名称：
+                </label>
+                <input class="form-control" id="name" name="name" placeholder="请输入名称" ref="sele" type="text" v-model="username">
+                    <br>
+                        <label for="sag">
+                            年龄：
+                        </label>
+                        <input class="form-control" id="seg" name="seg" placeholder="请输入年龄" ref="sele" type="text" v-model="ages">
+                            <br>
+                                <div>
+                                    <button @click="addData()" class="btn btn-primary" type="button" value="添加">
+                                        添加
+                                    </button>
+                                    <input class="btn btn-danger" type="reset" value="重置">
+                                    </input>
+                                </div>
+                            </br>
+                        </input>
+                    </br>
+                </input>
+            </form>
+            <hr>
+                <h3 class="text-center text-muted">
+                    数据查询列表
+                </h3>
+                <table class="table" role="table">
+                    <tr>
+                        <th class="text-center">
+                            #
+                        </th>
+                        <th class="text-center">
+                            名称
+                        </th>
+                        <th class="text-center">
+                            年龄
+                        </th>
+                        <th class="text-center">
+                            操作
+                        </th>
+                    </tr>
+                    <tr class="text-center" v-for="(list,index) in myData">
+                        <td>
+                            {{index+1}}
+                        </td>
+                        <td>
+                            {{list.name}}
+                        </td>
+                        <td>
+                            {{list.age}}
+                        </td>
+                        <td>
+                            <button @click="nowindex=index,m=false" class="btn btn-danger" data-target="#layer" data-toggle="modal">
+                                删除
+                            </button>
+                        </td>
+                    </tr>
+                    <tr v-show="myData.length==0">
+                        <td colspan="4">
+                            <p class="text-center text-muted">
+                                暂无数据……
+                            </p>
+                        </td>
+                    </tr>
+                    <tr v-show="myData.length!=0">
+                        <td class="text-right" colspan="4">
+                            <button @click="nowindex=-1,m=true" class="btn btn-danger" data-target="#layer" data-toggle="modal">
+                                删除全部
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <!--模态框 弹出框-->
+                <div class="modal fade" id="layer" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    确定
+                                    <span v-show="m">
+                                        全部
+                                    </span>
+                                    删除吗？
+                                </h4>
+                                <div class="text-right">
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        取消
+                                    </button>
+                                    <button @click="noindex(nowindex)" class="btn btn-danger" data-dismiss="modal">
+                                        确定
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </hr>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+            new Vue({
+                el: "#todu",
+                data: {
+                    myData: [],
+                    username: "",
+                    ages: "",
+                    nowindex: 1,
+                    m: false
+                },
+                methods: {
+                    addData:function(){
+                        if(this.$refs.sele.value==""){
+                            alert("请填满资料！")
+                        }else{
+                            this.myData.push({
+                                name:this.username,
+                                age:this.ages
+                            });
+                            this.username="",
+                            this.ages=""
+                        }
+                    },
+                    noindex:function(n){
+                        if(n==-1){
+                            this.myData = [];
+                        }else{
+                           this.myData.splice(n,1);
+                        }
+                    }
+                }
+            });
+        }
+</script>
